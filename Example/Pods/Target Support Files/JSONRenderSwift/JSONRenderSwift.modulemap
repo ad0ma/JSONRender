@@ -1,0 +1,6 @@
+framework module JSONRenderSwift {
+  umbrella header "JSONRenderSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

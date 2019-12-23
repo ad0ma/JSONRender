@@ -1,0 +1,8 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'JSONRender_Example' do
+  pod 'JSONRender', :path => '../'
+  pod 'JSONRenderSwift', :path => '../'
+end

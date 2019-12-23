@@ -1,0 +1,6 @@
+framework module JSONRender {
+  umbrella header "JSONRender-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,21 @@
+PODS:
+  - JSONRender (1.0.0)
+  - JSONRenderSwift (1.0.0)
+
+DEPENDENCIES:
+  - JSONRender (from `../`)
+  - JSONRenderSwift (from `../`)
+
+EXTERNAL SOURCES:
+  JSONRender:
+    :path: "../"
+  JSONRenderSwift:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JSONRender: 14f73914c2ccde3111880a3a9c405ad98c46a3d2
+  JSONRenderSwift: 6df33f6862748dd50a981d5dc150a6f71037757a
+
+PODFILE CHECKSUM: d8c61e5f57c9835de234985fc1d895b38b9460a9
+
+COCOAPODS: 1.8.3
