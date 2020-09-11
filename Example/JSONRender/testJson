@@ -1,0 +1,20 @@
+{
+	"key": "value",
+	"bool": true,
+	"number": 10010,
+	"float": 99.10,
+	"array": [{
+			"key": null,
+			"string": ""
+		},
+		{
+			"number": 10010,
+			"float": 99.99
+		},
+		{}
+	],
+	"dictionary": {
+		"emptyArray": [],
+        "string": "valuevaluevaluevaluevaluevaluevaluevaluevaluevaluevaluevalue"
+	}
+}

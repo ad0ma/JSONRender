@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E051E95250B231F00D4A13C /* testJson in Resources */ = {isa = PBXBuildFile; fileRef = 5E051E94250B231F00D4A13C /* testJson */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -25,6 +26,7 @@
 		25ACB055CE9A6A5B357A976D /* Pods-JSONRender_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSONRender_Example.debug.xcconfig"; path = "Target Support Files/Pods-JSONRender_Example/Pods-JSONRender_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		2AE312DD81437B24513F17F4 /* Pods-JSONRender_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSONRender_Tests.release.xcconfig"; path = "Target Support Files/Pods-JSONRender_Tests/Pods-JSONRender_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		44EEF11A6F5D88FB7706A860 /* Pods_JSONRender_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSONRender_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E051E94250B231F00D4A13C /* testJson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testJson; sourceTree = "<group>"; };
 		5ECF3C6F23AD233E00098DBC /* JSONRenderSwift.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = JSONRenderSwift.podspec; path = ../JSONRenderSwift.podspec; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* JSONRender_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONRender_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -105,6 +107,7 @@
 				6003F5A5195388D20070C39A /* ADViewController.h */,
 				6003F5A6195388D20070C39A /* ADViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
+				5E051E94250B231F00D4A13C /* testJson */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -206,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				5E051E95250B231F00D4A13C /* testJson in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,

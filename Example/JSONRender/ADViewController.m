@@ -24,7 +24,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:@"https://adoma.cn/testJson"] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURL *url = [NSBundle.mainBundle URLForResource:@"testJson" withExtension:nil];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSMutableAttributedString *mattrs = [[NSMutableAttributedString alloc] initWithString:@"Example\n" attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:30]}];
         [mattrs append:json];
