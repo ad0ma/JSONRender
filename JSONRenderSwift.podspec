@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JSONRenderSwift'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'A easy way to render and highlight JSON to rich text'
   s.description      = <<-DESC
 A easy way to render and highlight JSON to rich text.

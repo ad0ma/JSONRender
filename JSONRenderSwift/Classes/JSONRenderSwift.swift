@@ -31,40 +31,39 @@ extension NSAttributedString {
     }
 }
 
-extension NSMutableAttributedString {
+extension NSAttributedString {
     
-    @objc public func append(_ element: Any?) {
-        return append(element: element, level: 0, ext: 0)
+    @objc class public func render(_ element: Any?) -> NSAttributedString {
+        return render(element: element, level: 0, ext: 0)
     }
     
-    private func append(element: Any?, level: Int, ext: CGFloat) {
+    private class func render(element: Any?, level: Int, ext: CGFloat) -> NSAttributedString {
         
         guard let element = element, element is NSNull == false else {
-            append(NSAttributedString.init(string: "null", color: kJSONNullValueColor))
-            return
+            return NSAttributedString.init(string: "null", color: kJSONNullValueColor)
         }
         
         switch element {
         case let dic as [String: Any]:
-            append(attributedString(dic: dic, level: level, ext: ext))
+            return attributedString(dic: dic, level: level, ext: ext)
         case let arr as [Any]:
-            append(attributedString(arr: arr, level: level, ext: ext))
+            return attributedString(arr: arr, level: level, ext: ext)
         case let bool as Bool:
-            append(NSAttributedString.init(string: bool ? "true":"false", color: kJSONBoolValueColor))
+            return NSAttributedString.init(string: bool ? "true":"false", color: kJSONBoolValueColor)
         case let number as NSNumber:
             var string = "\(number)"
             if number.objCType.pointee == 100 {
                 string = (Decimal.init(string: String.init(format: "%f", number.doubleValue))! as NSDecimalNumber).stringValue
             }
-            append(NSAttributedString.init(string: string, color: kJSONNumberValueColor))
+            return NSAttributedString.init(string: string, color: kJSONNumberValueColor)
         case let string as String:
-            append(NSAttributedString.init(string: "\"" + string + "\"", color: kJSONStringValueColor))
+            return NSAttributedString.init(string: "\"" + string + "\"", color: kJSONStringValueColor)
         default:
-            append(NSAttributedString.init(string: "\(element)", color: kJSONStringValueColor))
+            return NSAttributedString.init(string: "\(element)", color: kJSONStringValueColor)
         }
     }
     
-    private func attributedString(dic: [String: Any], level: Int, ext: CGFloat) -> NSMutableAttributedString {
+    private class func attributedString(dic: [String: Any], level: Int, ext: CGFloat) -> NSMutableAttributedString {
         
         let headPara = NSMutableParagraphStyle()
         headPara.firstLineHeadIndent = CGFloat(level * 10)
@@ -84,12 +83,13 @@ extension NSMutableAttributedString {
             let para = NSMutableParagraphStyle()
             para.firstLineHeadIndent = CGFloat((level + 1) * 10) + ext
             para.headIndent = CGFloat(level * 10) + width + ext + 5
+            para.lineBreakMode = .byCharWrapping
             
             mattr.append(NSAttributedString.init(string: key, color: kJSONKeyColor, style: para))
             
             mattr.append(NSAttributedString.init(string: ":", color: kJSONSymbolColor))
             
-            mattr.append(element: element.value, level: level + 1, ext: width + ext)
+            mattr.append(.render(element: element.value, level: level + 1, ext: width + ext))
             
             if idx != dic.count - 1 {
                 mattr.append(NSAttributedString.init(string: ",", color: kJSONSymbolColor))
@@ -105,7 +105,7 @@ extension NSMutableAttributedString {
         return mattr
     }
     
-    private func attributedString(arr: [Any], level: Int, ext: CGFloat) -> NSMutableAttributedString {
+    private class func attributedString(arr: [Any], level: Int, ext: CGFloat) -> NSMutableAttributedString {
         
         let headPara = NSMutableParagraphStyle()
         headPara.firstLineHeadIndent = CGFloat(level * 10)
@@ -125,12 +125,13 @@ extension NSMutableAttributedString {
             let para = NSMutableParagraphStyle()
             para.firstLineHeadIndent = CGFloat(level * 10) + ext + 5
             para.headIndent = CGFloat(level * 10) + width + ext + 5
-            
+            para.lineBreakMode = .byCharWrapping
+
             mattr.append(NSAttributedString.init(string: index, color: kJSONIndexColor, style: para))
             
             mattr.append(NSAttributedString.init(string: ":", color: kJSONSymbolColor))
             
-            mattr.append(element: element, level: level + 1, ext: width + ext)
+            mattr.append(.render(element: element, level: level + 1, ext: width + ext))
             
             if idx != arr.count - 1 {
                 mattr.append(NSAttributedString.init(string: ",", color: kJSONSymbolColor))
@@ -144,5 +145,12 @@ extension NSMutableAttributedString {
         mattr.append(NSAttributedString.init(string: "]", color: kJSONSymbolColor, style: tailPara))
         
         return mattr
+    }
+}
+
+extension NSMutableAttributedString {
+    
+    public func append(_ element: Any?) {
+        return append(.render(element))
     }
 }

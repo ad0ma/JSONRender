@@ -20,20 +20,20 @@
 
 #import "JSONRender.h"
 
-@implementation NSMutableAttributedString (ADLog)
+@implementation NSAttributedString (ADLog)
 
-- (void)append:(id)element
++ (NSAttributedString *)render:(id)element
 {
-    [self append:element level:0 ext:0];
+    return [self render:element level:0 ext:0];
 }
 
-- (void)append:(id)element level:(int)level ext:(CGFloat)ext;
++ (NSAttributedString *)render:(id)element level:(int)level ext:(CGFloat)ext
 {
     if ([element isKindOfClass:[NSDictionary class]]) {
-        [self appendAttributedString:[self attributedStringWithDic:element level:level ext:ext]];
+        return  [self attributedStringWithDic:element level:level ext:ext];
     }
     else if ([element isKindOfClass:[NSArray class]]) {
-        [self appendAttributedString:[self attributedStringWithArr:element level:level ext:ext]];
+        return [self attributedStringWithArr:element level:level ext:ext];
     }
     else {
         UIColor *color = kJSONStringValueColor;
@@ -63,11 +63,11 @@
         else {
             element = [NSString stringWithFormat:@"%@", element];
         }
-        [self appendAttributedString:[[NSAttributedString alloc] initWithString:element attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: color}]];
+        return [[NSAttributedString alloc] initWithString:element attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: color}];
     }
 }
- 
-- (NSAttributedString *)attributedStringWithDic:(NSDictionary *)dic level:(int)level ext:(CGFloat)ext
+
++ (NSAttributedString *)attributedStringWithDic:(NSDictionary *)dic level:(int)level ext:(CGFloat)ext
 {
     NSMutableParagraphStyle *headPara = [NSMutableParagraphStyle new];
     headPara.firstLineHeadIndent = level * 10;
@@ -89,13 +89,14 @@
         NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
         para.firstLineHeadIndent = (level + 1) * 10 + ext;
         para.headIndent = level * 10 + width + ext + 5;
-                        
+        para.lineBreakMode = NSLineBreakByCharWrapping;
+        
         [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:keyString attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: kJSONKeyColor, NSParagraphStyleAttributeName:para}]];
         
         [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:@":" attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: kJSONSymbolColor}]];
                 
-        [mattr append:dic[key] level:level + 1 ext:width + ext];
-        
+        [mattr append:[NSAttributedString render:dic[key] level:level + 1 ext:width + ext]];
+
         if (i != dic.allKeys.count - 1) {
             [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:@"," attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName:kJSONSymbolColor}]];
         }
@@ -110,7 +111,7 @@
     return mattr;
 }
 
-- (NSAttributedString *)attributedStringWithArr:(NSArray *)arr level:(int)level ext:(CGFloat)ext
++ (NSAttributedString *)attributedStringWithArr:(NSArray *)arr level:(int)level ext:(CGFloat)ext
 {
     NSMutableParagraphStyle *headPara = [NSMutableParagraphStyle new];
     headPara.firstLineHeadIndent = level * 10;
@@ -130,12 +131,13 @@
         NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
         para.firstLineHeadIndent = level * 10 + ext + 5;
         para.headIndent = level * 10 + ext + width + 5;
+        para.lineBreakMode = NSLineBreakByCharWrapping;
 
         [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:index attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: kJSONIndexColor, NSParagraphStyleAttributeName:para}]];
         
         [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:@":" attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: kJSONSymbolColor}]];
         
-        [mattr append:arr[i] level:level + 1 ext:width + ext];
+        [mattr append:[NSAttributedString render:arr[i] level:level + 1 ext:width + ext]];
         
         if (i != arr.count - 1) {
             [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:@"," attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName:kJSONSymbolColor}]];
@@ -149,6 +151,15 @@
     [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:@"]" attributes:@{NSFontAttributeName:kJSONFont, NSForegroundColorAttributeName: kJSONSymbolColor, NSParagraphStyleAttributeName:tailPara}]];
     
     return mattr;
+}
+
+@end
+
+@implementation NSMutableAttributedString (ADLog)
+
+- (void)append:(id)element
+{
+    [self append: [NSAttributedString render:element]];
 }
 
 @end

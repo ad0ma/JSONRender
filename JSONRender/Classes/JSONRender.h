@@ -10,6 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface NSAttributedString (ADLog)
+
++ (NSAttributedString *)render:(id)element;
+
+@end
+
+
 @interface NSMutableAttributedString (ADLog)
 
 - (void)append:(id)element;
