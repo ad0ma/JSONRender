@@ -48,9 +48,10 @@ extension NSAttributedString {
             return attributedString(dic: dic, level: level, ext: ext)
         case let arr as [Any]:
             return attributedString(arr: arr, level: level, ext: ext)
-        case let bool as Bool:
-            return NSAttributedString.init(string: bool ? "true":"false", color: kJSONBoolValueColor)
         case let number as NSNumber:
+            if number.isBool {
+                return NSAttributedString.init(string: number.boolValue ? "true":"false", color: kJSONBoolValueColor)
+            }
             var string = "\(number)"
             if number.objCType.pointee == 100 {
                 string = (Decimal.init(string: String.init(format: "%f", number.doubleValue))! as NSDecimalNumber).stringValue
@@ -145,6 +146,22 @@ extension NSAttributedString {
         mattr.append(NSAttributedString.init(string: "]", color: kJSONSymbolColor, style: tailPara))
         
         return mattr
+    }
+}
+
+private let trueNumber = NSNumber(value: true)
+private let falseNumber = NSNumber(value: false)
+private let trueObjCType = String(cString: trueNumber.objCType)
+private let falseObjCType = String(cString: falseNumber.objCType)
+
+extension NSNumber {
+    fileprivate var isBool: Bool {
+        let objCType = String(cString: self.objCType)
+        if (self.compare(trueNumber) == .orderedSame && objCType == trueObjCType) || (self.compare(falseNumber) == .orderedSame && objCType == falseObjCType) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
